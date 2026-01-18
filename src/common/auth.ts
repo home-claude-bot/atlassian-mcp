@@ -28,8 +28,9 @@ export class AtlassianAuth {
     if (!this.gatewayCloudId) {
       return this.baseUrl;
     }
-    // Confluence paths start with /wiki/, everything else is Jira
-    const service = path.startsWith("/wiki/") ? "confluence" : "jira";
+    // Confluence paths start with /wiki/ or equal /wiki, everything else is Jira
+    const isConfluence = path.startsWith("/wiki/") || path === "/wiki";
+    const service = isConfluence ? "confluence" : "jira";
     return `https://api.atlassian.com/ex/${service}/${this.gatewayCloudId}`;
   }
 
